@@ -61,12 +61,11 @@ $_SESSION['ses_userid'] = $slogin['id'];
 
 //Include all plugins
 $hooks = hook_include_main('_all');
-if(sizeof($hooks) > 0) foreach($hooks as $hook) include_once($hook);
-
+if(isset($hooks) && sizeof($hooks) > 0) foreach($hooks as $hook) include_once($hook);
 
 //Include tasks from plugins
 $my_tasks = hook_include_scheduler_task();
-foreach($my_tasks as $mt) {
+if(isset($my_tasks)) foreach($my_tasks as $mt) {
 	include_once($mt);
 }
 
@@ -103,4 +102,3 @@ if(sizeof($tasks) > 0) {
 	}//foreach(tasks as task)
 
 }//if(sizeof(tasks))
-
