@@ -80,7 +80,7 @@ if(!$_SESSION['lang2']) {
 }
 
 //Second one if for FreeBSD systems
-if(FALSE == setlocale(LC_ALL, ($_SESSION['lang'].'_'.$_SESSION['lang2'].'.ISO-8859-1'), ($_SESSION['lang'].'_'.$_SESSION['lang2'].'.ISO8859-1'))) {
+if(FALSE == setlocale(LC_ALL, ($_SESSION['lang'].'_'.$_SESSION['lang2'].'.ISO-8859-1'), ($_SESSION['lang'].'_'.$_SESSION['lang2'].'.ISO8859-1'), ($_SESSION['lang'].'_'.$_SESSION['lang2'].'.utf8'))) {
 	if (FALSE == setlocale(LC_ALL, ($_SESSION["lang"]."_".$_SESSION["lang2"]))) {
 		trigger_error("Could not load locale", E_USER_NOTICE);
 	} else {
