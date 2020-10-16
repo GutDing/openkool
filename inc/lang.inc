@@ -105,7 +105,7 @@ if($_SESSION["lang"] != $LIB_LANGS[0]) {
 
 	//HOOK: Include locallang files from the plugins
 	$hooks = hook_include_ll();
-	if(sizeof($hooks) > 0) foreach($hooks as $hook) include($hook);
+	if(isset($hooks) && sizeof($hooks) > 0) foreach($hooks as $hook) include($hook);
 
 	$LOCAL_LANG[$_SESSION["lang"]] = array_merge($LL[$LIB_LANGS[0]], $LL[$_SESSION["lang"]]);
 
