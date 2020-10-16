@@ -1369,7 +1369,7 @@ function ko_get_access($module, $uid='', $force=FALSE, $apply_admingroups=TRUE, 
 
 
 	//Add max value
-	$_access[$module]['MAX'] = max($_access[$module]);
+	$_access[$module]['MAX'] = (is_array($_access[$module])?max($_access[$module]):0);
 
 	//Store max and all values in Cache for ko_get_access_all()
 	$GLOBALS['kOOL']['admin_all'][$uid][$col] = $_access[$module]['ALL'];
