@@ -228,7 +228,7 @@ function kota_get_form($table, $column) {
 				case 'rectype':
 					$data['values'][] = '';
 					$data['descs'][] = getLL('kota_ko_leute_rectype_default');
-					foreach($RECTYPES as $k => $v) {
+					if ($RECTYPES) foreach($RECTYPES as $k => $v) {
 						if($k == '_default') continue;
 						$data['values'][] = $k;
 						$ll_value = getLL('kota_ko_leute_'.$column.'_'.$k);
