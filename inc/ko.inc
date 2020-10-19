@@ -23486,6 +23486,9 @@ function ko_mail_transport() {
 				$transport->setUsername($MAIL_TRANSPORT['auth_user']);
 				$transport->setPassword($MAIL_TRANSPORT['auth_pass']);
 			}
+			if($MAIL_TRANSPORT['set_stream_options']) {
+				$transport->setStreamOptions($MAIL_TRANSPORT['set_stream_options']);
+			}
 		break;
 
 		case 'mail':

@@ -282,6 +282,9 @@ class RawSmtpMailer
 				$this->Username = $MAIL_TRANSPORT['auth_user'];
 				$this->Password = $MAIL_TRANSPORT['auth_pass'];
 			}
+			if($MAIL_TRANSPORT['set_stream_options']) {
+				$this->setStreamOptions = $MAIL_TRANSPORT['set_stream_options'];
+			}
     }
 
     /**
@@ -467,6 +470,7 @@ class RawSmtpMailer
      */
     public function smtpConnect($options = array())
     {
+		$options = $this->setStreamOptions;
         if (is_null($this->smtp)) {
             $this->smtp = $this->getSMTPInstance();
         }
