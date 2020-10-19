@@ -83,7 +83,7 @@ function ko_mailing_main ($test = false, $mail_id_in = null, $recipient_in = nul
 
 	global $MAILING_PARAMETER,$BASE_PATH,$domain,$edit_base_link,$done_error_mails,$return_path,$imap,$max_recipients,$ko_menu_akt,$access,$verbose;
 
-	error_reporting(E_ALL);
+	error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 	define ('CRLF', "\r\n");
 
 
@@ -197,10 +197,11 @@ function ko_mailing_main ($test = false, $mail_id_in = null, $recipient_in = nul
 
 
 	//Create POP3 connection
+	$port = (!empty($port)) ? ":$port" : '';
 	$ssl = ($ssl==true) ? '/ssl' : '';
 	$cert = ($cert==true) ? '' : '/novalidate-cert';
 	$folder = $folder ? $folder : 'INBOX';
-	$imap = imap_open('{'."$host:$port/pop3$ssl$cert"."}$folder",$user,$pass);
+	$imap = imap_open('{'."$host$port/pop3$ssl$cert"."}$folder",$user,$pass);
 
 	//Exit if connection to IMAP failed
 	if($imap == FALSE) {
@@ -253,7 +254,7 @@ function ko_mailing_main ($test = false, $mail_id_in = null, $recipient_in = nul
 				foreach($header->to as $obj) {
 					$mail_recipients['to'][] = format_userinput($obj->mailbox.'@'.$obj->host, 'email');
 				}
-				foreach($header->cc as $obj) {
+				if (isset($header->cc)) foreach($header->cc as $obj) {
 					$mail_recipients['cc'][] = format_userinput($obj->mailbox.'@'.$obj->host, 'email');
 				}
 				$unique_mails[$mail['message_id']] = array(
@@ -1746,7 +1747,7 @@ function ko_mailing_markers($string, $leute_id, $email, $qp=FALSE, $placeholderJ
 	ko_get_person_by_id($leute_id, $p);
 	if(!$p['id'] || $p['id'] != $leute_id) return $string;
 
-	$key = $leute_id . '_' . $email['id'] . '_' . ($qp?'1':'0') . '_' . sha1($placeholderJSON?$placeholderJSON:'##NONE##') . '_' . sha1($string);
+	$key = $leute_id . '_' . $email . '_' . ($qp?'1':'0') . '_' . sha1($placeholderJSON?$placeholderJSON:'##NONE##') . '_' . sha1($string);
 	if (isset($GLOBALS['kOOL']['mailingMarkerMap'][$key])) $map = $GLOBALS['kOOL']['mailingMarkerMap'][$key];
 	else {
 		$map = array();
