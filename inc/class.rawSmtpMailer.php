@@ -282,8 +282,8 @@ class RawSmtpMailer
 				$this->Username = $MAIL_TRANSPORT['auth_user'];
 				$this->Password = $MAIL_TRANSPORT['auth_pass'];
 			}
-			if($MAIL_TRANSPORT['set_stream_options']) {
-				$this->setStreamOptions = $MAIL_TRANSPORT['set_stream_options'];
+			if($MAIL_TRANSPORT['validate-cert']===false) {
+				$this->setStreamOptions = ['ssl'=>['allow_self_signed'=>TRUE, 'verify_peer'=>FALSE, 'verify_peer_name'=>FALSE]];
 			}
     }
 
@@ -470,7 +470,7 @@ class RawSmtpMailer
      */
     public function smtpConnect($options = array())
     {
-		$options = $this->setStreamOptions;
+		if (isset($this->setStreamOptions)) $options = $this->setStreamOptions;
         if (is_null($this->smtp)) {
             $this->smtp = $this->getSMTPInstance();
         }

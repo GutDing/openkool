@@ -23486,8 +23486,8 @@ function ko_mail_transport() {
 				$transport->setUsername($MAIL_TRANSPORT['auth_user']);
 				$transport->setPassword($MAIL_TRANSPORT['auth_pass']);
 			}
-			if($MAIL_TRANSPORT['set_stream_options']) {
-				$transport->setStreamOptions($MAIL_TRANSPORT['set_stream_options']);
+			if($MAIL_TRANSPORT['validate-cert']===false) {
+				$transport->setStreamOptions(['ssl'=>['allow_self_signed'=>TRUE, 'verify_peer'=>FALSE, 'verify_peer_name'=>FALSE]]);
 			}
 		break;
 
