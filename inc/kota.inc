@@ -5313,12 +5313,13 @@ foreach($GLOBALS['PLUGINS'] as $plugin) {
 //Merge data tab entries.
 // Main plugin usually overwrites _form_layout
 // but other plugins (e.g. billing or rodel) add new fields, so they have to be merged
-foreach($origLeuteData as $k => $v) {
-	if($k == 'groups') continue;
-	$KOTA['ko_leute']['_form_layout']['data'][$k] = $v;
+if (isset($origLeuteData)) {
+	foreach($origLeuteData as $k => $v) {
+		if($k == 'groups') continue;
+		$KOTA['ko_leute']['_form_layout']['data'][$k] = $v;
+	}
+	$KOTA['ko_leute']['_form_layout']['data']['groups'] = array_merge((array)$KOTA['ko_leute']['_form_layout']['data']['groups'], $origLeuteData['groups']);;
 }
-$KOTA['ko_leute']['_form_layout']['data']['groups'] = array_merge((array)$KOTA['ko_leute']['_form_layout']['data']['groups'], $origLeuteData['groups']);;
-
 
 
 if ($access['crm']['MAX'] > 0) {
